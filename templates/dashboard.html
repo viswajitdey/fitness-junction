@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+    <h2>Welcome, {{ username }}!</h2>
+</div>
+
+<div class="text-lg mb-4">
+    <h4>Your Weight Progress</h4>
+    <img src="/weight-graph" class="dashboard-graph border rounded p-2 img-fluid" style="max-width: 700px; margin:auto;">
+</div>
+
+<hr>
+
+<h4>Your Recent Health Entries</h4>
+
+{% if data %}
+<table class="table table-striped mt-3">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Weight (kg)</th>
+            <th>Steps</th>
+            <th>Calories Burned</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in data %}
+        <tr>
+            <td>{{ row.date }}</td>
+            <td>{{ row.weight }}</td>
+            <td>{{ row.steps }}</td>
+            <td>{{ row.calories_burned }}</td>
+            <td>
+                <a href="/edit/{{ row.data_id }}" class="btn btn-sm btn-primary">Edit</a>
+                <a href="/delete/{{ row.data_id }}" class="btn btn-sm btn-danger confirm-action">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No entries found. Add some health data!</p>
+{% endif %}
+
+<div class="mt-3">
+    <a href="/add-data" class="btn btn-success">Add Health Data</a>
+</div>
+{% endblock %}
